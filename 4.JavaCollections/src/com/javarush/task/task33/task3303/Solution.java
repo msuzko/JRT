@@ -13,6 +13,7 @@ import java.io.StringReader;
 public class Solution {
     public static <T> T convertFromJsonToNormal(String fileName, Class<T> clazz) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+
         return mapper.readValue(new FileReader(fileName),clazz);
     }
 
