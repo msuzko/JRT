@@ -12,7 +12,31 @@ public class Solution implements Action {
         //!!!!! Изменения могут быть тут
 
         public void someAction() {
+<<<<<<< HEAD
             //!!!!! Все изменения должны быть только тут
+=======
+            if (param>0){
+                while (param>0){
+                    System.out.println(param--);
+                }
+                FirstClass firstClass = new FirstClass() {
+                    @Override
+                    public Action getDependantAction() {
+                        super.someAction();
+                        return new SecondClass();
+                    }
+                };
+//                firstClass.someAction();
+                firstClass.getDependantAction().someAction();
+                System.out.println(SecondClass.SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM.substring(1)+ param);
+
+            } else{
+                SecondClass secondClass = new SecondClass();
+                secondClass.someAction();
+                System.out.println(SecondClass.SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM.substring(1)+ param);
+
+            }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         }
     };
 

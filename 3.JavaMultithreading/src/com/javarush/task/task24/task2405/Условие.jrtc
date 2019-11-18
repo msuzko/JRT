@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task24.task2405"\n\nBlack box
+=======
+taskKey="com.javarush.task.task24.task2405"
+
+Black box
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 1. Восстанови логику метода someAction для поля solutionAction.
 2. Пример вывода смотри в комментарии к методу main.

@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task23.task2311"\n\nПовторяем threads
+=======
+taskKey="com.javarush.task.task23.task2311"
+
+Повторяем threads
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Сделать так, чтобы в методе someActions вызывались только методы класса Solution.
 Ожидаемый вывод в методе main:

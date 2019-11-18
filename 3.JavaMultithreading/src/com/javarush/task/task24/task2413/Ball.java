@@ -1,5 +1,6 @@
 package com.javarush.task.task24.task2413;
 
+<<<<<<< HEAD
 /**
  * Класс для шарика в игре
  */
@@ -14,15 +15,27 @@ public class Ball extends BaseObject {
     private double dy;
 
     // заморожен ли объект или может двигаться
+=======
+public class Ball extends BaseObject {
+    private double speed;
+    private double direction;
+    private double dx, dy;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     private boolean isFrozen;
 
     public Ball(double x, double y, double speed, double direction) {
         super(x, y, 1);
+<<<<<<< HEAD
 
         this.direction = direction;
         this.speed = speed;
 
         this.isFrozen = true;
+=======
+        this.speed = speed;
+        this.direction = direction;
+        isFrozen = true;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 
     public double getSpeed() {
@@ -37,14 +50,32 @@ public class Ball extends BaseObject {
         return direction;
     }
 
+<<<<<<< HEAD
+=======
+    public void setDirection(double direction) {
+        this.direction = direction;
+        double angle = Math.toRadians(direction);
+        dx = Math.cos(angle) * speed;
+        dy = -Math.sin(angle) * speed;
+    }
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     public double getDx() {
         return dx;
     }
 
+<<<<<<< HEAD
+=======
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     public double getDy() {
         return dy;
     }
 
+<<<<<<< HEAD
     /**
      * Устанавливаем новое направление движения.
      * Тут же вычисляем и новый вектор.
@@ -112,5 +143,30 @@ public class Ball extends BaseObject {
     void start() {
         this.setDirection(direction);
         this.isFrozen = false;
+=======
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.setPoint(x, y, 'O');
+    }
+
+    @Override
+    public void move() {
+        if (!isFrozen) {
+            x += dx;
+            y += dy;
+        }
+    }
+
+    public void start() {
+        isFrozen = false;
+    }
+
+    public void checkRebound(int minx, int maxx, int miny, int maxy){
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 }

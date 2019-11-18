@@ -1,9 +1,14 @@
 package com.javarush.task.task29.task2909.human;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+<<<<<<< HEAD
 public class Human {
     public static int nextId = 0;
     private int id;
@@ -28,6 +33,27 @@ public class Human {
 
     public int getBloodGroup() {
         return bloodGroup;
+=======
+public class Human implements Alive{
+    private static int nextId = 0;
+    private int id;
+    protected int age;
+    protected String name;
+    private List<Human> children = new ArrayList<>();
+
+
+    protected Size size;
+
+
+    private BloodGroup bloodGroup;
+
+    public BloodGroup getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroup bloodGroup) {
+        this.bloodGroup = bloodGroup;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 
     public List<Human> getChildren() {
@@ -67,9 +93,12 @@ public class Human {
         this.name = name;
     }
 
+<<<<<<< HEAD
     public int getCourse() {
         return course;
     }
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     public void live() {
     }
@@ -77,6 +106,7 @@ public class Human {
         return id;
     }
 
+<<<<<<< HEAD
     public void setId(int id) {
         this.id = id;
     }
@@ -84,4 +114,22 @@ public class Human {
     public void printSize() {
         System.out.println("Рост: " + size[0] + " Вес: " + size[1]);
     }
+=======
+    public void printSize() {
+        System.out.println("Рост: " + size.height + " Вес: " + size.weight);
+    }
+
+    public String getPosition(){
+        return "Человек";
+    }
+
+    public void printData() {
+        System.out.println(getPosition()+": " + name);
+    }
+
+    public class Size{
+        public int height,weight;
+    }
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 }

@@ -32,7 +32,11 @@ public class Solution {
 
         //доступ к этому методу возможен только внутри класса Solution, т.к. модификатор иннер класса private
         public String getDescription() {
+<<<<<<< HEAD
             return String.format("My name is %s. I am from %s in %s", this.name, city, country);
+=======
+            return String.format("My name is %s. I'm from %s in %s.", this.name,city,country);
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         }
     }
 

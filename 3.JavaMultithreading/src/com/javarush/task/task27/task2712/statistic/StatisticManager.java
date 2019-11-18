@@ -11,7 +11,11 @@ import java.util.*;
 public class StatisticManager {
     private static StatisticManager instance;
     private StatisticStorage statisticStorage = new StatisticStorage();
+<<<<<<< HEAD
 //    private Set<Cook> cooks = new HashSet<>();
+=======
+    private Set<Cook> cooks = new HashSet<>();
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     private StatisticManager() {
     }
@@ -29,6 +33,7 @@ public class StatisticManager {
         statisticStorage.put(data);
     }
 
+<<<<<<< HEAD
 //    public void register(Cook cook) {
 //        cooks.add(cook);
 //    }
@@ -36,6 +41,11 @@ public class StatisticManager {
 //    public Set<Cook> getCooks() {
 //        return cooks;
 //    }
+=======
+    public void register(Cook cook) {
+        cooks.add(cook);
+    }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     public Map<Date, Double> getProfit() {
         Map<Date, Double> profits = new TreeMap<>(Collections.reverseOrder());

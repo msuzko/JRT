@@ -7,10 +7,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.10.1" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.26" level="project" />
     <orderEntry type="library" name="org.apache.logging.log4j:log4j-core:2.11.2" level="project" />
     <orderEntry type="library" name="org.apache.logging.log4j:log4j-1.2-api:2.11.2" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-simple:1.7.29" level="project" />
+=======
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.29" level="application" />
+    <orderEntry type="library" name="Simple Logging Facade for Java:1.6.2" level="application" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.10.1" level="application" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.10.1" level="application" />
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
   </component>
 </module>

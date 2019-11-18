@@ -38,7 +38,11 @@ public abstract class AbstractDbSelectExecutor<T extends NamedItem> {
 
     //reflection
     //you need to know that it is possible to create a new instance of the T (generic type) class using its default constructor
+<<<<<<< HEAD
     private T getNewInstanceOfGenericType() throws InstantiationException, IllegalAccessException {
+=======
+    public  T getNewInstanceOfGenericType() throws InstantiationException, IllegalAccessException {
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         return (T) ((Class) ((ParameterizedType) this.getClass().
                 getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
     }

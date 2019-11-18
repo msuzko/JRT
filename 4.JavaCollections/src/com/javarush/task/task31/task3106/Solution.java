@@ -10,10 +10,19 @@ import java.util.zip.ZipInputStream;
 */
 public class Solution {
     public static void main(String[] args) throws FileNotFoundException {
+<<<<<<< HEAD
+=======
+        //String resultFileName = args[0];
+        //String resultFileName = "C:\\temp\\song.mp3";
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         //Заполним сет именами архивов
         TreeSet<String> set = new TreeSet<>();
         for (int i = 1; i < args.length; i++) {
             String name = args[i];
+<<<<<<< HEAD
+=======
+            //String name = "C:\\temp\\test.zip.00" + i;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
             set.add(name);
         }
         //Соберем вектор из этих имен

@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task23.task2307"\n\nКак выбрать нужное?
+=======
+taskKey="com.javarush.task.task23.task2307"
+
+Как выбрать нужное?
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 В методе main присвой объекту Object obj экземпляр класса TEST.
 Не изменяй ничего кроме метода main.

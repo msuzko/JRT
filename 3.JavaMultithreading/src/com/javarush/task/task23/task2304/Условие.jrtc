@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task23.task2304"\n\nInner 3
+=======
+taskKey="com.javarush.task.task23.task2304"
+
+Inner 3
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Внутри класса Solution:
 1) реализуйте private class TaskDataProvider используя Task и MockDB, цель которого - обновить поле tasks.

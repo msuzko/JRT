@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task21.task2108"\n\nКлонирование растений
+=======
+taskKey="com.javarush.task.task21.task2108"
+
+Клонирование растений
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Класс Plant не должен реализовывать интерфейс Cloneable
 Реализуй механизм глубокого клонирования для Tree.

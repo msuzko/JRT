@@ -1,12 +1,16 @@
 package com.javarush.task.task35.task3513;
 
+<<<<<<< HEAD
 import javax.swing.*;
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 import java.util.Arrays;
 
 public class Main {
     private static final int FIELD_WIDTH = 4;
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         Model model = new Model();
         Controller controller = new Controller(model);
         JFrame game = new JFrame();
@@ -19,6 +23,8 @@ public class Main {
 
         game.setLocationRelativeTo(null);
         game.setVisible(true);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 //        Main main = new Main();
 //        Model model = new Model();
 //        Tile[][] tiles = model.getGameTiles();

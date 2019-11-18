@@ -1,16 +1,25 @@
 package com.javarush.task.task35.task3513;
 
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 public class Model {
     private static final int FIELD_WIDTH = 4;
     private Tile[][] gameTiles;
     protected int score;
     protected int maxTile;
+<<<<<<< HEAD
     private Stack<Tile[][]> previousStates = new Stack();
     private Stack<Integer> previousScores = new Stack();
     private boolean isSaveNeeded = true;
 
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     public Model() {
         resetGameTiles();
@@ -40,6 +49,7 @@ public class Model {
         return emptyTiles;
     }
 
+<<<<<<< HEAD
     public boolean canMove() {
         for (int i = 0; i < FIELD_WIDTH; i++)
             for (int j = 0; j < FIELD_WIDTH; j++) {
@@ -48,6 +58,16 @@ public class Model {
                 if (i != 0 && gameTiles[i][j].value == gameTiles[i - 1][j].value)
                     return true;
                 if (j != 0 && gameTiles[i][j].value == gameTiles[i][j - 1].value)
+=======
+    public boolean canMove(){
+        for (int i= 0;i<FIELD_WIDTH;i++)
+            for(int j = 0;j<FIELD_WIDTH;j++) {
+                if (gameTiles[i][j].value==0)
+                    return true;
+                if (i!=0 && gameTiles[i][j].value==gameTiles[i-1][j].value)
+                    return true;
+                if (j!=0 && gameTiles[i][j].value == gameTiles[i][j-1].value)
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
                     return true;
             }
         return false;
@@ -65,13 +85,20 @@ public class Model {
         Tile[][] rotetedTile = new Tile[FIELD_WIDTH][FIELD_WIDTH];
         for (int i = 0; i < FIELD_WIDTH; i++)
             for (int j = 0; j < FIELD_WIDTH; j++)
+<<<<<<< HEAD
                 rotetedTile[i][j] = gameTiles[FIELD_WIDTH - j - 1][i];
+=======
+                rotetedTile[i][j] = gameTiles[FIELD_WIDTH-j-1][i];
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         gameTiles = rotetedTile;
     }
 
     public void left() {
+<<<<<<< HEAD
         if (isSaveNeeded)
             saveState(gameTiles);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         boolean changed = false;
         for (int i = 0; i < FIELD_WIDTH; i++)
             if (compressTiles(gameTiles[i]) | mergeTiles(gameTiles[i])) {
@@ -79,12 +106,18 @@ public class Model {
             }
         if (changed) {
             addTile();
+<<<<<<< HEAD
             isSaveNeeded = true;
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         }
     }
 
     public void right() {
+<<<<<<< HEAD
         saveState(gameTiles);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         rotate();
         rotate();
         left();
@@ -93,7 +126,10 @@ public class Model {
     }
 
     public void down() {
+<<<<<<< HEAD
         saveState(gameTiles);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         rotate();
         left();
         rotate();
@@ -102,7 +138,10 @@ public class Model {
     }
 
     public void up() {
+<<<<<<< HEAD
         saveState(gameTiles);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         rotate();
         rotate();
         rotate();
@@ -150,6 +189,7 @@ public class Model {
             maxTile = newValue;
     }
 
+<<<<<<< HEAD
     private void saveState(Tile[][] tiles) {
         Tile[][] tileForSave = new Tile[FIELD_WIDTH][FIELD_WIDTH];
         for (int i = 0; i < FIELD_WIDTH; i++)
@@ -212,4 +252,6 @@ public class Model {
         return weight;
     }
 
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 }

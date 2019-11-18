@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task24.task2404"\n\nРефакторинг Rectangle
+=======
+taskKey="com.javarush.task.task24.task2404"
+
+Рефакторинг Rectangle
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 В классе Rectangle:
 1. Измени методы getHeight и getWidth, чтобы они возвращали объекты типов HasHeight и HasWidth соответственно.

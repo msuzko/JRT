@@ -1,5 +1,12 @@
 package com.javarush.task.task24.task2404;
 
+<<<<<<< HEAD
+=======
+import com.javarush.task.task24.task2404.HasHeight;
+import com.javarush.task.task24.task2404.HasWidth;
+import com.javarush.task.task24.task2404.Point;
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 /* 
 Рефакторинг Rectangle
 */
@@ -32,11 +39,31 @@ public class Solution {
         }
 
         public HasHeight castToHasHeight() {
+<<<<<<< HEAD
             return () -> Math.abs(point1.getY() - point2.getY());
         }
 
         public HasWidth castToHasWidth() {
             return () -> Math.abs(point1.getX() - point2.getX());
+=======
+            HasHeight hasHeight = new HasHeight() {
+                @Override
+                public double getHeight() {
+                    return Math.abs(point1.getY() - point2.getY());
+                }
+            };
+            return hasHeight;
+        }
+
+        public HasWidth castToHasWidth() {
+            HasWidth hasWidth = new HasWidth() {
+                @Override
+                public double getWidth() {
+                    return Math.abs(point1.getX() - point2.getX());
+                }
+            };
+            return hasWidth;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         }
     }
 }

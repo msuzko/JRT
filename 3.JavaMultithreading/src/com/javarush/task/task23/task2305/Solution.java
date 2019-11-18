@@ -10,6 +10,7 @@ public class Solution {
     }
 
     public static Solution[] getTwoSolutions() {
+<<<<<<< HEAD
         Solution[] solutions = new Solution[2];
         solutions[0] = createSolution();;
         solutions[1] = createSolution();;
@@ -31,5 +32,18 @@ public class Solution {
             }
             System.out.println("}");
         }
+=======
+        Solution sol1 = new Solution();
+        sol1.innerClasses[0] = sol1.new InnerClass();
+        sol1.innerClasses[1] = sol1.new InnerClass();
+        Solution sol2 = new Solution();
+        sol2.innerClasses[0] = sol2.new InnerClass();
+        sol2.innerClasses[1] = sol2.new InnerClass();
+        return new Solution[]{sol1,sol2};
+    }
+
+    public static void main(String[] args) {
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 }

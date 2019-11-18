@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task22.task2210"\n\nStringTokenizer
+=======
+taskKey="com.javarush.task.task22.task2210"
+
+StringTokenizer
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Используя StringTokenizer разделить query на части по разделителю delimiter.
 Пример,

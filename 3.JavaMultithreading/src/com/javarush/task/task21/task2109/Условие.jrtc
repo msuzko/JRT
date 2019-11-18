@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task21.task2109"\n\nЗапретить клонирование
+=======
+taskKey="com.javarush.task.task21.task2109"
+
+Запретить клонирование
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Разреши клонировать класс А
 Запрети клонировать класс B

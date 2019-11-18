@@ -1,13 +1,18 @@
 package com.javarush.task.task26.task2601;
 
+<<<<<<< HEAD
 import java.util.*;
 
 /*
+=======
+/* 
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 Почитать в инете про медиану выборки
 */
 public class Solution {
 
     public static void main(String[] args) {
+<<<<<<< HEAD
 //        Integer[] array = sort(new Integer[]{13, 8, 5, 17});
 //        for (int i :
 //                array) {
@@ -43,4 +48,13 @@ public class Solution {
         }
     }
 
+=======
+
+    }
+
+    public static Integer[] sort(Integer[] array) {
+        //implement logic here
+        return array;
+    }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 }

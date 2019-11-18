@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 taskKey="com.javarush.task.task23.task2305"\n\nInner
+=======
+taskKey="com.javarush.task.task23.task2305"
+
+Inner
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 Реализовать метод getTwoSolutions, который должен возвращать массив из 2-х экземпляров класса Solution.
 Для каждого экземпляра класса Solution инициализировать поле innerClasses двумя значениями.

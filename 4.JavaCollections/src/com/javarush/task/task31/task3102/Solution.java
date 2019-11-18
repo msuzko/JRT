@@ -22,6 +22,13 @@ public class Solution {
     }
 
     public static void main(String[] args) throws IOException {
+<<<<<<< HEAD
+=======
+//        for (String s :
+////                getFileTree("C:\\temp")) {
+////            System.out.println(s);
+////        }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
     
     private static class MyFileVisitor extends SimpleFileVisitor<Path>{

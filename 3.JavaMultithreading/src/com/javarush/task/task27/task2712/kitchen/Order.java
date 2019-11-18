@@ -13,7 +13,11 @@ public class Order {
 
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
+<<<<<<< HEAD
         initDishes();
+=======
+        dishes = ConsoleHelper.getAllDishesForOrder();
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 
     public int getTotalCookingTime() {
@@ -24,6 +28,7 @@ public class Order {
         }
         return time;
     }
+<<<<<<< HEAD
     protected void initDishes(){
         try {
             dishes = ConsoleHelper.getAllDishesForOrder();
@@ -31,6 +36,8 @@ public class Order {
             e.printStackTrace();
         }
     }
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     public boolean isEmpty(){
         return dishes.isEmpty();
@@ -40,10 +47,13 @@ public class Order {
         return dishes;
     }
 
+<<<<<<< HEAD
     public Tablet getTablet() {
         return tablet;
     }
 
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     @Override
     public String toString() {
         return "Your order: " + Arrays.toString(dishes.toArray()) + " of " + tablet;

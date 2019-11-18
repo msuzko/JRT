@@ -1,5 +1,6 @@
 package com.javarush.task.task24.task2413;
 
+<<<<<<< HEAD
 /**
  * Подставка, с помощью которой отражаем мячик.
  */
@@ -60,5 +61,41 @@ public class Stand extends BaseObject {
     @Override
     void draw(Canvas canvas) {
         canvas.drawMatrix(x - radius + 1, y, matrix, 'M');
+=======
+public class Stand extends BaseObject {
+    private double speed;
+    private double direction;
+
+    public Stand(double x, double y) {
+        super(x, y, 3);
+        speed = 1;
+        direction = 0;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
+
+    @Override
+    public void move() {
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 }

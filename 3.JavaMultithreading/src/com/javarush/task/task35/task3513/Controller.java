@@ -1,6 +1,7 @@
 package com.javarush.task.task35.task3513;
 
 import java.awt.event.KeyAdapter;
+<<<<<<< HEAD
 import java.awt.event.KeyEvent;
 
 public class Controller extends KeyAdapter {
@@ -70,4 +71,17 @@ public class Controller extends KeyAdapter {
     public View getView() {
         return view;
     }
+=======
+
+public class Controller extends KeyAdapter {
+    private Model model;
+    private View view;
+
+    public Tile[][] getGameTiles(){
+        return model.getGameTiles();
+    }
+    public int getScore(){
+        return model.score;
+    }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 }

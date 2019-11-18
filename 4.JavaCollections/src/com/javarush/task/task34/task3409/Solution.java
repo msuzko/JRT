@@ -18,6 +18,9 @@ public class Solution {
             Properties properties = new Properties();
             properties.load(is);
         }
+<<<<<<< HEAD
         System.out.println(path);
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 }

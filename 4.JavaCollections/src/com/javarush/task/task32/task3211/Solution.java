@@ -25,6 +25,7 @@ public class Solution {
         digest.update(byteArrayOutputStream.toByteArray());
 
         byte[] b = digest.digest();
+<<<<<<< HEAD
 
         StringBuilder builder = new StringBuilder();
         for (byte bt:b)
@@ -36,6 +37,12 @@ public class Solution {
 //        String md5Hex = tmp.toString(16);
 //        while (md5Hex.length() < 32)
 //            md5Hex = "0" + md5Hex;
+=======
+        BigInteger tmp = new BigInteger(1, b);
+        String md5Hex = tmp.toString(16);
+        while (md5Hex.length() < 32)
+            md5Hex = "0" + md5Hex;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         return md5Hex.equals(md5);
     }
 }

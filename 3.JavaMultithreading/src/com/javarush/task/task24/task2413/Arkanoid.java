@@ -1,5 +1,6 @@
 package com.javarush.task.task24.task2413;
 
+<<<<<<< HEAD
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -20,16 +21,29 @@ public class Arkanoid {
 
     // игра закончена?
     private boolean isGameOver = false;
+=======
+import java.util.List;
+
+public class Arkanoid {
+    private int width, height;
+    private Ball ball;
+    private Stand stand;
+    private List<Brick> bricks;
+    static Arkanoid game;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
     public Arkanoid(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
+<<<<<<< HEAD
     public ArrayList<Brick> getBricks() {
         return bricks;
     }
 
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     public Ball getBall() {
         return ball;
     }
@@ -46,6 +60,7 @@ public class Arkanoid {
         this.stand = stand;
     }
 
+<<<<<<< HEAD
     /**
      * Рисуем на холсте границы и все объекты.
      */
@@ -180,24 +195,43 @@ public class Arkanoid {
     void checkEndGame() {
         if (ball.getY() > height && ball.getDy() > 0)
             isGameOver = true;
+=======
+    public List<Brick> getBricks() {
+        return bricks;
+    }
+
+    public void setBricks(List<Brick> bricks) {
+        this.bricks = bricks;
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 
     public int getWidth() {
         return width;
     }
 
+<<<<<<< HEAD
     public int getHeight() {
         return height;
     }
 
+=======
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     public void setWidth(int width) {
         this.width = width;
     }
 
+<<<<<<< HEAD
+=======
+    public int getHeight() {
+        return height;
+    }
+
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     public void setHeight(int height) {
         this.height = height;
     }
 
+<<<<<<< HEAD
     public static Arkanoid game;
 
     public static void main(String[] args) throws Exception {
@@ -231,8 +265,24 @@ public class Arkanoid {
 
 
 
+=======
+    public void run(){
+
+    }
+
+    public void move(){
+
+    }
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
 
 
 
+<<<<<<< HEAD
 
+=======
+    public static void main(String[] args) {
+
+    }
+}
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0

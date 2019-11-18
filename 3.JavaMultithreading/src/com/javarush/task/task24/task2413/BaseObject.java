@@ -1,5 +1,6 @@
 package com.javarush.task.task24.task2413;
 
+<<<<<<< HEAD
 /**
  * Базовый класс для всех объектов игры.
  */
@@ -11,6 +12,12 @@ public abstract class BaseObject {
     protected double radius;
 
     protected BaseObject(double x, double y, double radius) {
+=======
+public abstract class BaseObject {
+    protected double x, y, radius;
+
+    public BaseObject(double x, double y, double radius) {
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -40,6 +47,7 @@ public abstract class BaseObject {
         this.radius = radius;
     }
 
+<<<<<<< HEAD
     /**
      * Метод рисует свой объект на "канвасе".
      */
@@ -69,5 +77,16 @@ public abstract class BaseObject {
         double destination = Math.sqrt(dx * dx + dy * dy);
         double destination2 = Math.max(radius, o.radius);
         return destination <= destination2;
+=======
+    public abstract void draw(Canvas canvas);
+
+    public abstract void move();
+
+    public boolean isIntersec(BaseObject o) {
+        double dx = x - o.x;
+        double dy = y - o.y;
+
+        return Math.max(radius, o.radius) >= Math.sqrt(dx * dx + dy * dy);
+>>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 }
