@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneable, Set<E> {
     private static final Object PRESENT = new Object();
-    private transient HashMap<E,Object> map;
+    private transient HashMap<E, Object> map;
 
     public AmigoSet() {
         this.map = new HashMap<>();
@@ -74,7 +74,7 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
             int size = objectInputStream.readInt();
             float loadFactor = objectInputStream.readFloat();
             int capacity = objectInputStream.readInt();
-            this.map = new HashMap<>(capacity,loadFactor);
+            this.map = new HashMap<>(capacity, loadFactor);
             for (int i = 0; i < size; i++) {
                 Object o = objectInputStream.readObject();
                 map.put((E) o, PRESENT);
