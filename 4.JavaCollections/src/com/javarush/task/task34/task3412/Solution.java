@@ -25,10 +25,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
     }
 
     public void calculateAndSetValue3(long value) {

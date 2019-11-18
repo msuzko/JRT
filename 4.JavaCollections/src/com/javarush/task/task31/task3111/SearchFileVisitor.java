@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchFileVisitor extends SimpleFileVisitor<Path> {
@@ -24,14 +23,8 @@ public class SearchFileVisitor extends SimpleFileVisitor<Path> {
         if ((partOfContent == null || new String(content).contains(partOfContent))
                 && ((partOfName == null) || file.getFileName().toString().contains(partOfName))
                 && (minSize == 0 || content.length >= minSize)
-<<<<<<< HEAD
-                && (maxSize == 0 || content.length <= maxSize)) {
-            foundFiles.add(file);
-        }
-=======
                 && (maxSize == 0 || content.length <= maxSize))
             foundFiles.add(file);
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         return super.visitFile(file, attrs);
     }
 

@@ -2,7 +2,6 @@ package com.javarush.task.task32.task3211;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.StringWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
@@ -25,24 +24,10 @@ public class Solution {
         digest.update(byteArrayOutputStream.toByteArray());
 
         byte[] b = digest.digest();
-<<<<<<< HEAD
-
-        StringBuilder builder = new StringBuilder();
-        for (byte bt:b)
-            builder.append(String.format("%02x",bt));
-        String md5Hex = builder.toString();
-        System.out.println(md5Hex);
-
-//        BigInteger tmp = new BigInteger(1, b);
-//        String md5Hex = tmp.toString(16);
-//        while (md5Hex.length() < 32)
-//            md5Hex = "0" + md5Hex;
-=======
         BigInteger tmp = new BigInteger(1, b);
         String md5Hex = tmp.toString(16);
         while (md5Hex.length() < 32)
             md5Hex = "0" + md5Hex;
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         return md5Hex.equals(md5);
     }
 }

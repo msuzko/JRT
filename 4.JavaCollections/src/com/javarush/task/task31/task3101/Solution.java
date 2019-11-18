@@ -6,10 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,11 +24,7 @@ public class Solution {
         if (FileUtils.isExist(resultFile))
             FileUtils.renameFile(resultFile, newResultFile);
 
-<<<<<<< HEAD
-        Map<String, File> map = new TreeMap<>();
-=======
          Map<String, File> map = new TreeMap<>();
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
 
         try {
             Files.walkFileTree(new File(path).toPath(), new MyFileVisitor(map));
@@ -44,10 +37,7 @@ public class Solution {
             BufferedWriter out = new BufferedWriter(writer);
             for (Map.Entry<String, File> entry :
                     map.entrySet()) {
-<<<<<<< HEAD
-=======
                 // System.out.println(entry.getKey() + ": " + entry.getValue().getAbsolutePath());
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
                 try {
                     FileInputStream fis = new FileInputStream(entry.getValue());
                     BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -73,10 +63,6 @@ public class Solution {
 
     private static class MyFileVisitor extends SimpleFileVisitor<Path> {
         private Map<String, File> map;
-<<<<<<< HEAD
-
-=======
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
         public MyFileVisitor(Map<String, File> map) {
             this.map = map;
         }
@@ -84,11 +70,7 @@ public class Solution {
         @Override
         public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
             File file = path.toFile();
-<<<<<<< HEAD
-            if (!attrs.isDirectory() && attrs.size() <= 50 && file.getName().endsWith(".txt")) {
-=======
             if (!attrs.isDirectory() && attrs.size()<=50 && file.getName().endsWith(".txt")) {
->>>>>>> 868a4eae797161c67a4d9d5eb80d92a4e250d3d0
                 map.put(file.getName(), file);
             }
             return FileVisitResult.CONTINUE;
