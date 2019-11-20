@@ -7,9 +7,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.29" level="application" />
-    <orderEntry type="library" name="Simple Logging Facade for Java:1.6.2" level="application" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.10.1" level="application" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.10.1" level="application" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.10.1" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.26" level="project" />
+    <orderEntry type="library" name="org.apache.logging.log4j:log4j-core:2.11.2" level="project" />
+    <orderEntry type="library" name="org.apache.logging.log4j:log4j-1.2-api:2.11.2" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.8.3" level="project" />
+    <orderEntry type="library" name="com.google.guava:guava:23.0" level="project" />
+    <orderEntry type="library" name="org.apache.commons:commons-collections4:4.4" level="project" />
+    <orderEntry type="library" name="org.junit.vintage:junit-vintage-engine:5.5.2" level="project" />
   </component>
 </module>
