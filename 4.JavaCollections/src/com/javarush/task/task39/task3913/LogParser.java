@@ -1,7 +1,6 @@
 package com.javarush.task.task39.task3913;
 
-import com.javarush.task.task39.task3913.query.IPQuery;
-import com.javarush.task.task39.task3913.query.UserQuery;
+import com.javarush.task.task39.task3913.query.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,13 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class LogParser implements IPQuery, UserQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     private List<LogNode> logs = new ArrayList<>();
 
     public LogParser(Path logDir) {
@@ -46,39 +45,32 @@ public class LogParser implements IPQuery, UserQuery {
 
     @Override
     public Set<String> getUniqueIPs(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
                 .map(LogNode::getIp)
                 .collect(Collectors.toSet());
     }
 
+
     @Override
     public Set<String> getIPsForUser(String user, Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.name.equals(user)
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.name.equals(user))
                 .map(LogNode::getIp)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> getIPsForEvent(Event event, Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.event == event
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.event == event)
                 .map(LogNode::getIp)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> getIPsForStatus(Status status, Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.status == status
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.status == status)
                 .map(LogNode::getIp)
                 .collect(Collectors.toSet());
     }
@@ -92,9 +84,7 @@ public class LogParser implements IPQuery, UserQuery {
 
     @Override
     public int getNumberOfUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
                 .map(LogNode::getName)
                 .collect(Collectors.toSet())
                 .size();
@@ -102,10 +92,8 @@ public class LogParser implements IPQuery, UserQuery {
 
     @Override
     public int getNumberOfUserEvents(String user, Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getName().equals(user)
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getName().equals(user))
                 .map(LogNode::getEvent)
                 .collect(Collectors.toSet())
                 .size();
@@ -113,334 +101,299 @@ public class LogParser implements IPQuery, UserQuery {
 
     @Override
     public Set<String> getUsersForIP(String ip, Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getIp().equals(ip)
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getIp().equals(ip))
                 .map(LogNode::getName)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> getLoggedUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.LOGIN
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getUsersByEvent(after, before, Event.LOGIN);
+    }
+
+    private Set<String> getUsersByEvent(Date after, Date before, Event login) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getEvent() == login)
                 .map(LogNode::getName)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> getDownloadedPluginUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.DOWNLOAD_PLUGIN
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
-                .map(LogNode::getName)
-                .collect(Collectors.toSet());
+        return getUsersByEvent(after, before, Event.DOWNLOAD_PLUGIN);
     }
 
     @Override
     public Set<String> getWroteMessageUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.WRITE_MESSAGE
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
-                .map(LogNode::getName)
-                .collect(Collectors.toSet());
+        return getUsersByEvent(after, before, Event.WRITE_MESSAGE);
     }
 
     @Override
     public Set<String> getSolvedTaskUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.SOLVE_TASK
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
-                .map(LogNode::getName)
-                .collect(Collectors.toSet());
+        return getUsersByEvent(after, before, Event.SOLVE_TASK);
     }
 
     @Override
     public Set<String> getSolvedTaskUsers(Date after, Date before, int task) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.SOLVE_TASK
-                        && log.task.equals(task)
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getLogNodeStreamByTAskAndEvent(after, before, task, Event.SOLVE_TASK)
                 .map(LogNode::getName)
                 .collect(Collectors.toSet());
+    }
+
+    private Stream<LogNode> getLogNodeStreamByTAskAndEvent(Date after, Date before, int task, Event solveTask) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getEvent() == solveTask
+                        && log.task.equals(task));
     }
 
     @Override
     public Set<String> getDoneTaskUsers(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.DONE_TASK
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+        return getUsersByEvent(after, before, Event.DONE_TASK);
+    }
+
+
+    @Override
+    public Set<String> getDoneTaskUsers(Date after, Date before, int task) {
+        return getLogNodeStreamByTAskAndEvent(after, before, task, Event.DONE_TASK)
                 .map(LogNode::getName)
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<String> getDoneTaskUsers(Date after, Date before, int task) {
-        return logs.stream()
-                .filter(log -> log.getEvent() == Event.DONE_TASK
-                        && log.task.equals(task)
-                        && log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
-                .map(LogNode::getName)
+    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before) {
+        return getDateStreamByEvent(user, after, before, event)
                 .collect(Collectors.toSet());
     }
 
-//    @Override
-//    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == event
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getStatus() == Status.FAILED
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getStatus() == Status.ERROR
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.LOGIN
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .min(Comparator.naturalOrder())
-//                .orElse(null);
-//    }
-//
-//    @Override
-//    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.SOLVE_TASK
-//                        && log.getTask().equals(task)
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .sorted()
-//                .findFirst()
-//                .orElse(null);
-//    }
-//
-//    @Override
-//    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.DONE_TASK
-//                        && log.getTask().equals(task)
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .sorted()
-//                .findFirst()
-//                .orElse(null);
-//    }
-//
-//    @Override
-//    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.WRITE_MESSAGE
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.DOWNLOAD_PLUGIN
-//                        && log.getName().equals(user)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(log -> new Date(log.getDate()))
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public int getNumberOfAllEvents(Date after, Date before) {
-//        return getAllEvents(after, before).size();
-//    }
+    @Override
+    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
+        return getDatesByStatus(after, before, Status.FAILED);
+    }
 
-//    @Override
-//    public Set<Event> getAllEvents(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(LogNode::getEvent)
-//                .collect(Collectors.toSet());
-//    }
+    @Override
+    public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
+        return getDatesByStatus(after, before, Status.ERROR);
+    }
 
-    public Set<Status> getAllStatuses(Date after, Date before) {
-        return logs.stream()
-                .filter(log -> log.date >= (after == null ? 0 : after.getTime())
-                        && log.date <= (before == null ? Long.MAX_VALUE : before.getTime()))
+    private Set<Date> getDatesByStatus(Date after, Date before, Status status) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getStatus() == status)
+                .map(log -> new Date(log.date))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
+        return getDateStreamByEvent(user, after, before, Event.LOGIN)
+                .sorted()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
+        return getDateWhenUserFirstEventForTask(user, after, before, task, Event.SOLVE_TASK);
+    }
+
+    @Override
+    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
+        return getDateWhenUserFirstEventForTask(user, after, before, task, Event.DONE_TASK);
+    }
+
+    private Date getDateWhenUserFirstEventForTask(String user, Date after, Date before, int task, Event event) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.event == event
+                        && log.task.equals(task)
+                        && log.getName().equals(user))
+                .map(log -> new Date(log.date))
+                .sorted()
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    private Stream<Date> getDateStreamByEvent(String user, Date after, Date before, Event event) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getEvent() == event
+                        && log.getName().equals(user))
+                .map(log -> new Date(log.date));
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
+        return getDateStreamByEvent(user, after, before, Event.WRITE_MESSAGE)
+                .collect(Collectors.toSet());
+    }
+
+
+    @Override
+    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
+        return getDateStreamByEvent(user, after, before, Event.DOWNLOAD_PLUGIN)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public int getNumberOfAllEvents(Date after, Date before) {
+        return getAllEvents(after, before).size();
+    }
+
+    @Override
+    public Set<Event> getAllEvents(Date after, Date before) {
+        return getLogsBetweenDates(after, before)
+                .map(LogNode::getEvent)
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Status> getAllStatuses(Date after, Date before) {
+        return getLogsBetweenDates(after, before)
                 .map(LogNode::getStatus)
                 .collect(Collectors.toSet());
     }
 
-    public Set<Date> getAllDates() {
+
+    private Set<Date> getAllDates() {
         return logs.stream()
                 .map(log -> new Date(log.date))
                 .collect(Collectors.toSet());
     }
 
-//    @Override
-//    public Set<Event> getEventsForIP(String ip, Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getIp().equals(ip)
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(LogNode::getEvent)
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Set<Event> getEventsForUser(String user, Date after, Date before) {
-//        return getEventsForIP(user, after, before);
-//    }
-//
-//    @Override
-//    public Set<Event> getFailedEvents(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getStatus() == Status.FAILED
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(LogNode::getEvent)
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public Set<Event> getErrorEvents(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getStatus() == Status.ERROR
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .map(LogNode::getEvent)
-//                .collect(Collectors.toSet());
-//    }
-//
-//    @Override
-//    public int getNumberOfAttemptToSolveTask(int task, Date after, Date before) {
-//        return (int) logs.stream()
-//                .filter(log -> log.getEvent() == Event.SOLVE_TASK
-//                        && log.getTask() == task
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .count();
-//    }
-//
-//    @Override
-//    public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
-//        return (int) logs.stream()
-//                .filter(log -> log.getEvent() == Event.DONE_TASK
-//                        && log.getTask() == task
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .count();
-//    }
-//
-//    @Override
-//    public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.SOLVE_TASK
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .collect(Collectors.toMap(LogNode::getTask, log -> 1, Integer::sum));
-//    }
-//
-//    @Override
-//    public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before) {
-//        return logs.stream()
-//                .filter(log -> log.getEvent() == Event.DONE_TASK
-//                        && log.getDate() >= (after == null ? 0 : after.getTime())
-//                        && log.getDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
-//                .collect(Collectors.toMap(LogNode::getTask, log -> 1, Integer::sum));
-//    }
+    @Override
+    public Set<Event> getEventsForIP(String ip, Date after, Date before) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getIp().equals(ip))
+                .map(LogNode::getEvent)
+                .collect(Collectors.toSet());
+    }
 
-//    public Set simpleExecute(String query) {
-//        switch (query.trim()) {
-//            case "get ip":
-//                return getUniqueIPs(null, null);
-//            case "get user":
-//                return getAllUsers();
-//            case "get event":
-//                return getAllEvents(null, null);
-//            case "get status":
-//                return getAllStatuses(null, null);
-//            case "get date":
-//                return getAllDates();
-//            default:
-//                return null;
-//        }
-//    }
 
-//    @Override
-//    public Set execute(String query) {
-//        if (query.split(" ").length == 2)
-//            return simpleExecute(query);
-//        String pattern = "get (?<tag>\\w+)(\\sfor\\s(?<field>\\w+)\\s=\\s\"(?<value>.+?)\")?(\\sand date between" +
-//                "\\s\"(?<after>[\\d]+.[\\d]+.[\\d]+ [\\d]+:[\\d]+:[\\d]+)\"\\sand\\s\"" +
-//                "(?<before>[\\d]+.[\\d]+.[\\d]+ [\\d]+:[\\d]+:[\\d]+)\")?";
-//        Matcher matcher = Pattern.compile(pattern).matcher(query);
-//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-//        if (matcher.find()) {
-//            String field1 = matcher.group("tag");
-//            String field2 = matcher.group("field");
-//            String value2 = matcher.group("value");
-//            Date after = null;
-//            Date before = null;
-//            try {
-//                if (matcher.group("after") != null && matcher.group("before") != null) {
-//                    after = format.parse(matcher.group("after"));
-//                    before = format.parse(matcher.group("before"));
-//                }
-//                if (field2.equals("date"))
-//                    value2 = format.parse(value2).toString();
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            String value1 = value2;
-//            Date constAfter = after;
-//            Date constBefore = before;
-//            return logs.stream()
-//                    .filter(log -> log.get(field2).toString().equalsIgnoreCase(value1)
-//                            && log.getDate() > (constAfter == null ? 0 : constAfter.getTime())
-//                            && log.getDate() < (constBefore == null ? Long.MAX_VALUE : constBefore.getTime()))
-//                    .map(log -> log.get(field1))
-//                    .collect(Collectors.toSet());
-//        }
-//        return null;
-//    }
+    @Override
+    public Set<Event> getEventsForUser(String user, Date after, Date before) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.name.equals(user))
+                .map(LogNode::getEvent)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Event> getFailedEvents(Date after, Date before) {
+        return getEventsByStatus(after, before, Status.FAILED);
+    }
+
+    @Override
+    public Set<Event> getErrorEvents(Date after, Date before) {
+        return getEventsByStatus(after, before, Status.ERROR);
+    }
+
+    private Set<Event> getEventsByStatus(Date after, Date before, Status status) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getStatus() == status)
+                .map(LogNode::getEvent)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public int getNumberOfAttemptToSolveTask(int task, Date after, Date before) {
+        return getNumberTasksWithEvent(task, after, before, Event.SOLVE_TASK);
+    }
+
+    @Override
+    public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
+        return getNumberTasksWithEvent(task, after, before, Event.DONE_TASK);
+    }
+
+    private int getNumberTasksWithEvent(int task, Date after, Date before, Event event) {
+        return (int) getLogsBetweenDates(after, before)
+                .filter(log -> log.getEvent() == event
+                        && log.task == task)
+                .count();
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before) {
+        return getAllTasksAndTheirNumberByEvent(after, before, Event.SOLVE_TASK);
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before) {
+        return getAllTasksAndTheirNumberByEvent(after, before, Event.DONE_TASK);
+    }
+
+    private Map<Integer, Integer> getAllTasksAndTheirNumberByEvent(Date after, Date before, Event event) {
+        return getLogsBetweenDates(after, before)
+                .filter(log -> log.getEvent() == event)
+                .collect(Collectors.toMap(LogNode::getTask, log -> 1, Integer::sum));
+    }
+
+    public Set simpleExecute(String query) {
+        switch (query.trim()) {
+            case "get ip":
+                return getUniqueIPs(null, null);
+            case "get user":
+                return getAllUsers();
+            case "get event":
+                return getAllEvents(null, null);
+            case "get status":
+                return getAllStatuses(null, null);
+            case "get date":
+                return getAllDates();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Set execute(String query) {
+        if (query.split(" ").length == 2)
+            return simpleExecute(query);
+        String pattern = "get (?<tag>\\w+)(\\sfor\\s(?<field>\\w+)\\s=\\s\"(?<value>.+?)\")?(\\sand date between" +
+                "\\s\"(?<after>[\\d]+.[\\d]+.[\\d]+ [\\d]+:[\\d]+:[\\d]+)\"\\sand\\s\"" +
+                "(?<before>[\\d]+.[\\d]+.[\\d]+ [\\d]+:[\\d]+:[\\d]+)\")?";
+        Matcher matcher = Pattern.compile(pattern).matcher(query);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        if (matcher.find()) {
+            String tag = matcher.group("tag");
+            String field = matcher.group("field");
+            String value = matcher.group("value");
+            Date after = null;
+            Date before = null;
+            try {
+                if (matcher.group("after") != null && matcher.group("before") != null) {
+                    after = format.parse(matcher.group("after"));
+                    before = format.parse(matcher.group("before"));
+                }
+                if (field.equals("date"))
+                    value = format.parse(value).toString();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String finalValue = value;
+            Date finalAfter = after;
+            Date finalBefore = before;
+            return logs.stream()
+                    .filter(log -> log.get(field).toString().equalsIgnoreCase(finalValue)
+                            && log.date > (finalAfter == null ? 0 : finalAfter.getTime())
+                            && log.date < (finalBefore == null ? Long.MAX_VALUE : finalBefore.getTime()))
+                    .map(log -> log.get(tag))
+                    .collect(Collectors.toSet());
+        }
+        return null;
+
+    }
+
+    private Stream<LogNode> getLogsBetweenDates(Date after, Date before) {
+        return logs.stream().filter(
+                log -> log.date >= getAfterNotNull(after)
+                        && log.date <= getBeforeNotNull(before));
+    }
+
+    private long getAfterNotNull(Date after) {
+        return after == null ? 0 : after.getTime();
+    }
+
+    private long getBeforeNotNull(Date before) {
+        return before == null ? Long.MAX_VALUE : before.getTime();
+    }
 
     private static class LogNode {
         private String ip;
@@ -488,15 +441,19 @@ public class LogParser implements IPQuery, UserQuery {
             return ip;
         }
 
-        public String getName() {return name;}
+        String getName() {
+            return name;
+        }
 
-//        public Long getDate() {return date;}
-//
-        public Event getEvent() {return event;}
-//
-//        public Integer getTask() {return task;}
+        Event getEvent() {
+            return event;
+        }
 
-        public Status getStatus() {
+        Integer getTask() {
+            return task;
+        }
+
+        Status getStatus() {
             return status;
         }
     }

@@ -15,6 +15,7 @@ target/
 
 /out/
 /JavaRushPlugin.properties
+/Instruction.png
 /Инструкция.png
 /out.log
 /hs_err_pid736.log
