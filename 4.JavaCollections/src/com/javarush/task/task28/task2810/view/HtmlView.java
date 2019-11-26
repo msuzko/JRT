@@ -42,7 +42,7 @@ public class HtmlView implements View {
             Element copyTemplate = templateOriginal.clone();
             copyTemplate.removeAttr("style");
             copyTemplate.removeClass("template");
-            document.select("tr[class=vacancy]").remove().not("tr[class=vacancy template");
+            document.select("tr[class=vacancy]").remove();//.not("tr[class=vacancy template");
 
             for (Vacancy vacancy : vacancies) {
                 Element localClone = copyTemplate.clone();
