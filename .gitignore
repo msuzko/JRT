@@ -15,7 +15,6 @@ target/
 
 /out/
 /JavaRushPlugin.properties
-/Instruction.png
 /Инструкция.png
 /out.log
 /hs_err_pid736.log
@@ -29,5 +28,3 @@ target/
 /slf4j-api-1.7.29.jar
 /slf4j-log4j13-1.0.1.jar
 /slf4j-simple-1.6.2.jar
-/4.JavaCollections/4.JavaCollections.iml
-/8.Games/lib/desktop-game-engine.jar
